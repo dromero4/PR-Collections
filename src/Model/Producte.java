@@ -12,9 +12,8 @@ abstract class Producte {
     }
 
     public int getCodi_barres() {return codi_barres;}
-
     public int getPreu() {return preu;}
-
     public String getNom() {return nom;}
+
     public abstract double calcularPreu();
 }

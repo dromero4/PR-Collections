@@ -7,4 +7,9 @@ public class Textil extends Producte{
         super(nom, preu, codi_barres);
         this.composicio = composicio;
     }
+
+    @Override
+    public double calcularPreu() {
+        return preu;
+    }
 }
