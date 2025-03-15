@@ -20,12 +20,11 @@ public class view {
         System.out.println("0. Tornar");
     }
 
-    public static int mostrarMenuIntroduïrProducte(Scanner scan) {
+    public static void mostrarMenuIntroduïrProducte() {
         System.out.println("Introduïr producte");
         System.out.println("1. Alimentació");
         System.out.println("2. Tèxtil");
         System.out.println("3. Electrònica");
         System.out.println("0. Tornar");
-        return scan.nextInt();
     }
 }

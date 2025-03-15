@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Objects;
 
-abstract class Producte {
+abstract class Producte implements Comparable<Producte>{
     String nom;
     float preu;
     String codi_barres;
@@ -34,4 +34,6 @@ abstract class Producte {
     public String toString() {
         return nom + " (" + codi_barres + ") - " + calcularPreu() + "€";
     }
+
+
 }

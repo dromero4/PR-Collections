@@ -12,4 +12,9 @@ public class Textil extends Producte{
     public double calcularPreu() {
         return preu;
     }
+
+    @Override
+    public int compareTo(Producte o) {
+        return 0;
+    }
 }
