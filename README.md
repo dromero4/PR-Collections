@@ -69,7 +69,6 @@ Es faran servir **Collections** per gestionar els productes. Es pot utilitzar **
 #### Excepcions Estàndard:
 - **InputMismatchException**: Per gestionar entrades incorrectes de dades.
 - **FileNotFoundException**: Per gestionar errors en intentar accedir a arxius.
-- **IOException**: Per gestionar errors d'entrada/sortida.
 
 #### Excepcions Personalitzades:
 A continuació, s'han de definir excepcions personalitzades per gestionar certs errors específics a l'aplicació:
