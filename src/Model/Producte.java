@@ -1,19 +1,21 @@
 package Model;
 
+import Exceptions.customExceptions.*;
+
 import java.util.Objects;
 
 public abstract class Producte implements Comparable<Producte>{
     String nom;
     float preu;
-    String codi_barres;
+    int codi_barres;
 
-    public Producte(String nom, float preu, String codi_barres) {
+    public Producte(String nom, float preu, int codi_barres) throws LimitCaracteresException {
         this.nom = nom;
         this.preu = preu;
         this.codi_barres = codi_barres;
     }
 
-    public String getCodi_barres() {return codi_barres;}
+    public int getCodi_barres() {return codi_barres;}
     public float getPreu() {return preu;}
     public String getNom() {return nom;}
 

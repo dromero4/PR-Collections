@@ -58,7 +58,8 @@ public class Main {
                         scan.nextLine();  // Consumir el salto de línea pendiente
 
                         view.mostrarMissatge("Codi de barres: ", true);
-                        String codi = scan.nextLine();
+                        int codi = scan.nextInt();
+                        scan.nextLine();
 
                         if (tipus == 1) {
                             view.mostrarMissatge("Data de caducitat (YYYY-MM-DD): ", true);
@@ -91,7 +92,7 @@ public class Main {
                         break;
                     case 5:
                         view.mostrarMissatge("Buscar per un codi de barres: ", true);
-                        String codi_barres = scan.next();
+                        int codi_barres = scan.nextInt();
 
                         Producte producte = CarroCompra.buscarCodiBarres(codi_barres);
 
@@ -108,7 +109,7 @@ public class Main {
                 } catch (DateTimeParseException e) {
                     System.out.println("Error: Format de data incorrecte. Usa YYYY-MM-DD.");
                 } catch (Exception e) {
-                    System.out.println("S'ha produït un error inesperat: " + e.getMessage());
+                    System.out.println("Error: " + e.getMessage());
                 }
             } while (true);
 

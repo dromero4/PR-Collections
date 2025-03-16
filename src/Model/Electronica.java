@@ -1,10 +1,15 @@
 package Model;
 
+import Exceptions.customExceptions.*;
+
 public class Electronica extends Producte{
     int garantia;
 
-    public Electronica(String nom, float preu, String codi_barres, int garantia) {
+    public Electronica(String nom, float preu, int codi_barres, int garantia) throws Exception{
         super(nom, preu, codi_barres);
+        if (garantia < 0){
+            throw new NegatiuException("El numero no pot ser negatiu!");
+        }
         this.garantia = garantia;
     }
 

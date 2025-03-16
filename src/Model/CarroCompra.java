@@ -1,19 +1,54 @@
 package Model;
 
+
+import Exceptions.customExceptions.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class CarroCompra {
     private static TreeMap<Producte, Integer> productes = new TreeMap<>();
     private static List<Tiquet> historialTiquets = new ArrayList<>();
 
-    public static void afegirProducte(Producte producte) {
-        if (!productes.containsKey(producte)){
-            productes.put(producte, productes.getOrDefault(producte, 0) + 1);
+
+
+
+    private static boolean productesNoDisponibles(String nom_producte) throws FileNotFoundException {
+        File not_available_products_file = new File("src/not_available_products");
+
+        if (!not_available_products_file.exists()){
+            throw new FileNotFoundException("No existeix l'arxiu " + not_available_products_file.getAbsoluteFile());
         }
+
+        Scanner reader = new Scanner(not_available_products_file);
+
+        while (reader.hasNext()){
+            String[] notAvailableProducts = reader.nextLine().split(", ");
+
+            for (int i = 0; i < notAvailableProducts.length; i++) {
+                if (nom_producte.equals(notAvailableProducts[i])){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void afegirProducte(Producte producte) throws LimitProductesException, NotAvailableProduct, FileNotFoundException {
+        if (productes.size() > 100){
+            throw new LimitProductesException("Limit de productes superat!");
+        }
+
+        if (!productesNoDisponibles(producte.getNom())){
+            throw new NotAvailableProduct("Aquest producte no el tenim actualment.");
+        }
+
+        productes.put(producte, productes.getOrDefault(producte, 0) + 1);
 
     }
 
-    public static void mostrarCarro() {
+    public static void mostrarCarro(){
         System.out.println(" --- Carro de la compra --- ");
         if (productes.isEmpty()){
             System.out.println("No hi ha cap producte a la cesta");
@@ -78,9 +113,9 @@ public class CarroCompra {
         llistaComposicio.forEach(System.out::println);
     }
 
-    public static Producte buscarCodiBarres(String codi_barres){
+    public static Producte buscarCodiBarres(int codi_barres){
         return productes.keySet().stream()
-                .filter(p -> p.getCodi_barres().equals(codi_barres))
+                .filter(p -> p.getCodi_barres() == codi_barres)
                 .findFirst()
                 .orElse(null);
     }

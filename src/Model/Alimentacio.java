@@ -1,12 +1,17 @@
 package Model;
 
+import Exceptions.customExceptions.*;
+
 import java.time.LocalDate;
 
 public class Alimentacio extends Producte {
     private LocalDate data_caducitat;
 
-    public Alimentacio(String nom, float preu, String codi_barres, LocalDate data_caducitat) {
+    public Alimentacio(String nom, float preu, int codi_barres, LocalDate data_caducitat) throws DataCaducitatException, LimitCaracteresException {
         super(nom, preu, codi_barres);
+        if (data_caducitat.isBefore(LocalDate.now())){
+            throw new DataCaducitatException("El producte està caducat!");
+        }
         this.data_caducitat = data_caducitat;
     }
 
