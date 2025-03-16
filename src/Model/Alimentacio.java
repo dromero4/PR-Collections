@@ -36,9 +36,10 @@ public class Alimentacio extends Producte {
         return data_caducitat;
     }
 
+    //Compare to per ordenar per data de caducitat
     @Override
     public int compareTo(Producte o) {
-        if (o instanceof Alimentacio){
+        if (o instanceof Alimentacio) {
             return this.data_caducitat.compareTo(((Alimentacio) o).getData_caducitat());
         }
 

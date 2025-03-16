@@ -21,13 +21,18 @@ public abstract class Producte implements Comparable<Producte>{
 
     public abstract double calcularPreu();
 
-    public boolean equals(Object o){
-        if (this == o) return false;
-        if (getClass() != o.getClass()) return false;
-        Producte producte = (Producte) o;
-        return Objects.equals(codi_barres, producte.codi_barres);
+    @Override
+    public int compareTo(Producte o) {
+        if (o == null) {
+            return 1; // Si el otro objeto es null, este objeto debe ser "mayor"
+        }
+
+        // Comparar por código de barras
+        return Integer.compare(this.codi_barres, o.codi_barres);
     }
 
+
+    //hashCode per ordenacio de productes
     public int hashCode(){
         return Objects.hash(codi_barres);
     }

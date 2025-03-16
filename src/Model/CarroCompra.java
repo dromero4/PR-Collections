@@ -11,9 +11,8 @@ public class CarroCompra {
     private static TreeMap<Producte, Integer> productes = new TreeMap<>();
     private static List<Tiquet> historialTiquets = new ArrayList<>();
 
-
-
-
+    //Sistema de productes no disponibles
+    //L'he implementat per poder utilitzar l'excepcio FileNotFound
     private static boolean productesNoDisponibles(String nom_producte) throws FileNotFoundException {
         File not_available_products_file = new File("src/not_available_products");
 
@@ -37,13 +36,22 @@ public class CarroCompra {
 
     public static void afegirProducte(Producte producte) throws LimitProductesException, NotAvailableProduct, FileNotFoundException {
         if (productes.size() > 100){
+            //En cas de haver 100 productes, no deixa afegir més
             throw new LimitProductesException("Limit de productes superat!");
         }
 
         if (!productesNoDisponibles(producte.getNom())){
+            //Llançem l'error en cas de no haver el producte que el client busca
             throw new NotAvailableProduct("Aquest producte no el tenim actualment.");
         }
 
+        for (Producte p : productes.keySet()) {
+            if (p.getCodi_barres() == producte.getCodi_barres()) {
+                throw new NotAvailableProduct("Este producto ya ha sido añadido al carro.");
+            }
+        }
+
+        //Afegir al array de productes el producte seleccionat (en cas d'estar ja, es suma el key)
         productes.put(producte, productes.getOrDefault(producte, 0) + 1);
 
     }
@@ -59,6 +67,7 @@ public class CarroCompra {
         }
     }
 
+    //lambda amb streams, per ordenar el carro per caducitat
     public static void mostrarCarroCaducitat() {
         productes.keySet().stream()
                 .filter(producte -> producte instanceof Alimentacio)
@@ -98,6 +107,7 @@ public class CarroCompra {
     public static void buidarCarro() {
         productes.clear();
     }
+
 
     public static void ordreComposicio(){
         List<Textil> llistaComposicio = new ArrayList<>();
