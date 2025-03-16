@@ -1,7 +1,4 @@
-import Model.Alimentacio;
-import Model.CarroCompra;
-import Model.Electronica;
-import Model.Textil;
+import Model.*;
 import View.view;
 
 import java.time.LocalDate;
@@ -13,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         do {
             view.mostrarMenuPrincipal();
-            System.out.println("Quina opcio vols?");
+            view.mostrarMissatge("Quina opcio vols?: ", true);
             int opcio = scan.nextInt();
             scan.nextLine();  // Consumir el salto de línea pendiente
 
@@ -27,6 +24,17 @@ public class Main {
 
                     if (menu == 1){
                         CarroCompra.mostrarCarroCaducitat();
+                    } else if (menu == 2){
+                        view.mostrarMissatge("--- HISTORIAL DE TIQUETS --- ", false);
+                        if (CarroCompra.getHistorialTiquets().isEmpty()) {
+                            view.mostrarMissatge("Encara no s'han generat tiquets.", false);
+                        } else {
+                            for (Tiquet t : CarroCompra.getHistorialTiquets()) {
+                                t.imprimirTiquet();
+                            }
+                        }
+                    } else if (menu == 3){
+                        CarroCompra.ordreComposicio();
                     }
                     break;
                 case 2:
@@ -34,31 +42,39 @@ public class Main {
                     int tipus = scan.nextInt();
                     scan.nextLine();  // Consumir el salto de línea pendiente
 
-                    System.out.print("Nom: ");
+                    view.mostrarMissatge("Nom: ", true);
                     String nom = scan.nextLine();
 
-                    System.out.print("Preu: ");
+                    view.mostrarMissatge("Preu: ", true);
                     float preu = scan.nextFloat();
                     scan.nextLine();  // Consumir el salto de línea pendiente
 
-                    System.out.print("Codi de barres: ");
+                    view.mostrarMissatge("Codi de barres: ", true);
                     String codi = scan.nextLine();
 
                     if (tipus == 1) {
-                        System.out.print("Data de caducitat (YYYY-MM-DD): ");
+                        view.mostrarMissatge("Data de caducitat (YYYY-MM-DD): ", true);
                         LocalDate dataCaducitat = LocalDate.parse(scan.nextLine());
                         CarroCompra.afegirProducte(new Alimentacio(nom, preu, codi, dataCaducitat));
                     } else if (tipus == 2) {
-                        System.out.print("Composició: ");
+                        view.mostrarMissatge("Composició: ", true);
                         String composicio = scan.nextLine();
                         CarroCompra.afegirProducte(new Textil(nom, preu, codi, composicio));
                     } else if (tipus == 3) {
-                        System.out.print("Dies de garantia: ");
+                        view.mostrarMissatge("Dies de garantia: ", true);
                         int garantia = scan.nextInt();
                         scan.nextLine();  // Consumir el salto de línea pendiente
                         CarroCompra.afegirProducte(new Electronica(nom, preu, codi, garantia));
                     } else {
                         view.mostrarMenuPrincipal();
+                    }
+                    break;
+                case 3:
+                    Tiquet tiquet = CarroCompra.passarPerCaixa();
+                    if (tiquet == null){
+                        view.mostrarMissatge("El carro està buit, no es pot generar un tiquet", false);
+                    } else {
+                        tiquet.imprimirTiquet();
                     }
                     break;
                 case 4:

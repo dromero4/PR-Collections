@@ -8,6 +8,10 @@ public class Textil extends Producte{
         this.composicio = composicio;
     }
 
+    public String getComposicio() {
+        return composicio;
+    }
+
     @Override
     public double calcularPreu() {
         return preu;
@@ -15,6 +19,15 @@ public class Textil extends Producte{
 
     @Override
     public int compareTo(Producte o) {
+        if (o instanceof Textil){
+            return this.composicio.compareTo(((Textil) o).getComposicio());
+        }
+
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Composició: " + getComposicio();
     }
 }

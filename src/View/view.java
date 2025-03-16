@@ -1,6 +1,5 @@
 package View;
 
-import java.util.Scanner;
 
 public class view {
     public static void mostrarMenuPrincipal(){
@@ -27,4 +26,18 @@ public class view {
         System.out.println("3. Electrònica");
         System.out.println("0. Tornar");
     }
+
+    public static void mostrarMissatge(String missatge, boolean line){
+        if (line){
+            System.out.print(missatge);
+        } else {
+            System.out.println(missatge);
+        }
+
+    }
+
+    public static void mostrarTiquet(){
+
+    }
+
 }
