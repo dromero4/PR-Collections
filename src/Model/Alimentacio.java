@@ -13,8 +13,19 @@ public class Alimentacio extends Producte {
     @Override
     public double calcularPreu() {
         long diesRestants = LocalDate.now().until(data_caducitat).getDays();
-        return Math.round(preu - preu * (1.0 / (diesRestants + 1)) + (preu * 0.1)) / 100.0;
+
+        // Asegúrate de no dividir por cero en caso de que el producto haya caducado (diesRestants <= 0)
+        if (diesRestants <= 0) {
+            return preu * 0.1; // Si ya ha caducado, el precio es solo el 10% del original (o lo que prefieras)
+        }
+
+        // Aplicamos el descuento proporcional según los días restantes y sumamos el 10% extra
+        double preuDescompte = preu - (preu * (1.0 / (diesRestants + 1))) + (preu * 0.1);
+
+        // Redondeamos a 2 decimales y retornamos el precio final
+        return Math.round(preuDescompte * 100.0) / 100.0;
     }
+
 
     public LocalDate getData_caducitat() {
         return data_caducitat;

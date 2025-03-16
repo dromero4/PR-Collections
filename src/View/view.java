@@ -8,6 +8,7 @@ public class view {
         System.out.println("2. Introduïr producte");
         System.out.println("3. Passar per caixa");
         System.out.println("4. Mostrar el carro de la compra");
+        System.out.println("5. Buscar per codi de barres");
         System.out.println("0. Sortir");
     }
 
@@ -27,16 +28,12 @@ public class view {
         System.out.println("0. Tornar");
     }
 
-    public static void mostrarMissatge(String missatge, boolean line){
-        if (line){
+    public static void mostrarMissatge(String missatge, boolean line) {
+        if (line) {
             System.out.print(missatge);
         } else {
             System.out.println(missatge);
         }
-
-    }
-
-    public static void mostrarTiquet(){
 
     }
 

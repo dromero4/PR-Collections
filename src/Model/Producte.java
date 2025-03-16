@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Objects;
 
-abstract class Producte implements Comparable<Producte>{
+public abstract class Producte implements Comparable<Producte>{
     String nom;
     float preu;
     String codi_barres;

@@ -3,32 +3,32 @@ package Model;
 import java.util.*;
 
 public class CarroCompra {
-    private static HashMap<Producte, Integer> productes = new HashMap<>();
+    private static TreeMap<Producte, Integer> productes = new TreeMap<>();
     private static List<Tiquet> historialTiquets = new ArrayList<>();
 
     public static void afegirProducte(Producte producte) {
-        productes.put(producte, productes.getOrDefault(producte, 0) + 1);
+        if (!productes.containsKey(producte)){
+            productes.put(producte, productes.getOrDefault(producte, 0) + 1);
+        }
+
     }
 
     public static void mostrarCarro() {
         System.out.println(" --- Carro de la compra --- ");
+        if (productes.isEmpty()){
+            System.out.println("No hi ha cap producte a la cesta");
+            return;
+        }
         for (Map.Entry<Producte, Integer> entry : productes.entrySet()) {
             System.out.println(entry.getKey() + " - Quantitat: " + entry.getValue());
         }
     }
 
     public static void mostrarCarroCaducitat() {
-        List<Producte> aliments = new ArrayList<>();
-
-        for (Producte producte : productes.keySet()) {
-            if (producte instanceof Alimentacio) {
-                aliments.add(producte);
-            }
-        }
-
-        Collections.sort(aliments);
-
-        aliments.forEach(System.out::println);
+        productes.keySet().stream()
+                .filter(producte -> producte instanceof Alimentacio)
+                .sorted()
+                .forEach(System.out::println);
     }
 
     public static List<Tiquet> getHistorialTiquets() {
@@ -76,5 +76,12 @@ public class CarroCompra {
         Collections.sort(llistaComposicio);
 
         llistaComposicio.forEach(System.out::println);
+    }
+
+    public static Producte buscarCodiBarres(String codi_barres){
+        return productes.keySet().stream()
+                .filter(p -> p.getCodi_barres().equals(codi_barres))
+                .findFirst()
+                .orElse(null);
     }
 }
